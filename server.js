@@ -9,6 +9,8 @@ const helmet = require('helmet')
 
 const { PORT, MAIL_USER, MAIL_PASS } = process.env
 
+console.log(MAIL_USER, MAIL_PASS)
+
 const app = express()
 
 // Middleware
