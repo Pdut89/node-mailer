@@ -15,49 +15,96 @@ html
       }      
       #outlook a {
         padding:0;
+      }
+      p {
+        margin: 1em 0;
       }   
+      h1, h2, h3, h4, h5, h6 {
+        color: black !important;
+      }
       body{
         width:100% !important; 
         -webkit-text-size-adjust:100%; 
         -ms-text-size-adjust:100%; 
         margin:0; 
         padding:0;
-      }    
+      } 
+      table { 
+        border-collapse:collapse; 
+        mso-table-lspace:0pt; 
+        mso-table-rspace:0pt; 
+      }
+      table td {
+        border-collapse: collapse;
+        width: 100px;
+        height: 30px;
+      }  
+      #spacer {
+        height: 10px;
+        padding-right: 10px;
+      } 
+      #title {
+        width: 100px;
+        font-weight: 600;
+      }
       .ExternalClass {
         width:100%;
       }
       .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
         line-height: 100%;
       }
-      .backgroundTable {
+      #backgroundTable {
         margin:0; 
         padding:0; 
         width:100% !important; 
         line-height: 100% !important;
         background-color: #f6f6f6;
       }
+      #messageContainer {
+        width: 95%;
+        max-width: 600px;
+        margin: 10px 0;
+      }
+      #messageTitle {
+        padding: 0 20px;
+        font-size: 18px;
+        color: #fff;
+        height: 40px;
+        background-color: #1B2E3C;
+        border-radius: 5px;    
+      }
 
       
   body
-  
-    table.backgroundTable(cellpadding='0', cellspacing='0', border='0')
+    table#backgroundTable(cellpadding='0', cellspacing='0', border='0')
       tbody
         tr
-          td New message received!
-        tr
-          td Sender: 
-          td #{name} #{surname}
-        tr 
-          td Subject: 
-          td #{subject}
-        tr 
-          td Message: 
-          td #{subject}
-        tr 
-          td Contact details: 
-          td #{emailAddress}
-        tr
-          td
-          td #{phoneNumber}
+          td(align="center")
+           table#messageContainer(cellpadding='0', cellspacing='0', border='0')
+            tr 
+              td#messageTitle(colspan='2') New message received!
+            tr
+              td#spacer
+            tr
+              td#title Sender
+              td #{name} #{surname}
+            tr 
+              td#title Contact details
+              td #{emailAddress}
+            tr
+              td
+              td 
+               a(href=`tel:${phoneNumber}`) #{phoneNumber}
+            tr 
+              td#title Subject
+              td #{subject}
+            tr 
+              td#title Message
+            tr
+              td#message(colspan='2') #{message}
+          
+          
+          
+          
           
         
