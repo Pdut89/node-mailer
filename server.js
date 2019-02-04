@@ -1,3 +1,5 @@
+require('./config/config')
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const nodeMailer = require('nodemailer')
@@ -5,7 +7,7 @@ const Email = require('email-templates')
 const morgan = require('morgan')
 const helmet = require('helmet')
 
-const port = process.env.PORT || 5000
+const { PORT, MAIL_USER, MAIL_PASS } = process.env
 
 const app = express()
 
@@ -21,8 +23,8 @@ app.use(helmet())
 const transporter = nodeMailer.createTransport({
   service: 'gmail',
   auth: {
-      user: '',
-      pass: ''
+      user: MAIL_USER,
+      pass: MAIL_PASS
   }
 })
 
@@ -60,6 +62,6 @@ app.post('/send', function (req, res) {
     })
 })
 
-app.listen(port, function(req, res){
-  console.log('Server is running at port: ',port)
+app.listen(PORT, function(req, res){
+  console.log('Server is running at port: ',PORT)
 })
