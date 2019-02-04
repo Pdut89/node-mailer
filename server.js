@@ -23,7 +23,9 @@ app.use(helmet())
 
 // Config Mailers
 const transporter = nodeMailer.createTransport({
-  service: 'Gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
       user: MAIL_USER,
       pass: MAIL_PASS
