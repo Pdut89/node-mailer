@@ -7,9 +7,14 @@ const Email = require('email-templates')
 const morgan = require('morgan')
 const helmet = require('helmet')
 
-const { PORT, MAIL_USER, MAIL_PASS } = process.env
-
-console.log(MAIL_USER, MAIL_PASS)
+const {
+  PORT,
+  MAIL_USER,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  ACCESS_TOKEN,
+  REFRESH_TOKEN
+} = process.env
 
 const app = express()
 
@@ -20,17 +25,20 @@ app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(helmet())
 
-
-// Config Mailers
-const transporter = nodeMailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-      user: MAIL_USER,
-      pass: MAIL_PASS
-  }
+var transporter = nodeMailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        type: 'OAuth2',
+        user: MAIL_USER,
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: ACCESS_TOKEN
+    }
 })
+
 
 const email = new Email({
   transport: transporter,
