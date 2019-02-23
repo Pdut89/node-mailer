@@ -7,14 +7,7 @@ const Email = require('email-templates')
 const morgan = require('morgan')
 const helmet = require('helmet')
 
-const {
-  PORT,
-  MAIL_USER,
-  CLIENT_ID,
-  CLIENT_SECRET,
-  ACCESS_TOKEN,
-  REFRESH_TOKEN
-} = process.env
+const { PORT, USERNAME, PASSWORD } = process.env
 
 const app = express()
 
@@ -25,35 +18,36 @@ app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(helmet())
 
-var transporter = nodeMailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-        type: 'OAuth2',
-        user: MAIL_USER,
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-        accessToken: ACCESS_TOKEN
-    }
+const transporter = nodeMailer.createTransport({
+  host: 'smtp.zoho.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: USERNAME,
+    pass: PASSWORD
+  }
 })
-
 
 const email = new Email({
   transport: transporter,
   send: true,
-  preview: false,
+  preview: false
 })
 
-app.post('/send', function (req, res) {
-  const { name, surname, phoneNumber, emailAddress, subject, message } = req.body
+app.get('/', (req, res) => res.send(
+  'Node-mailer. Nothing here. See server.js for email POST request details.'
+))
+
+app.post('/send', (req, res) => {
+  const {
+    name, surname, phoneNumber, emailAddress, subject, message
+  } = req.body
 
   const emailOptions = {
     template: 'websiteEmail',
     message: {
-      from: 'no-reply@virtuegroup.co.za <pdut8901@gmail.com>',
-      to: 'pdut8901@gmail.com',
+      from: USERNAME,
+      to: emailAddress
     },
     locals: {
       name, surname, phoneNumber, emailAddress, subject, message
@@ -75,5 +69,5 @@ app.post('/send', function (req, res) {
 })
 
 app.listen(PORT, function(req, res){
-  console.log('Server is running at port: ',PORT)
+  console.log('Server is running on port: ', PORT)
 })
