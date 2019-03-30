@@ -6,6 +6,7 @@ const nodeMailer = require('nodemailer')
 const Email = require('email-templates')
 const morgan = require('morgan')
 const helmet = require('helmet')
+const cors = require('cors')
 
 const { PORT, USERNAME, PASSWORD } = process.env
 
@@ -15,15 +16,9 @@ const app = express()
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(cors())
 app.use(morgan('tiny'))
 app.use(helmet())
-
-// https://enable-cors.org/server_expressjs.html
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next()
-})
 
 const transporter = nodeMailer.createTransport({
   host: 'smtp.zoho.com',
