@@ -41,7 +41,7 @@ const email = new Email({
   preview: false
 })
 
-app.get('/', (req, res) => res.send(
+app.get('/', (req, res) => res.status(200).send(
   'Node-mailer. Nothing here. See server.js for email POST request details.'
 ))
 
