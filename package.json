@@ -1,7 +1,7 @@
 {
   "name": "virtuemailer",
   "version": "1.0.0",
-  "description": "Express server used only to send dynamically created emails.",
+  "description": "Express server to send emails from.",
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server.js",
