@@ -21,9 +21,7 @@ app.use(morgan('tiny'))
 app.use(helmet())
 
 const transporter = nodeMailer.createTransport({
-  host: 'smtp.zoho.com',
-  port: 465,
-  secure: true,
+  service: 'gmail',
   auth: {
     user: USERNAME,
     pass: PASSWORD
@@ -52,7 +50,12 @@ app.post('/send', (req, res) => {
       to: RECIPIENT
     },
     locals: {
-      name, surname, phoneNumber, emailAddress, subject, message
+      name,
+      surname, 
+      phoneNumber, 
+      emailAddress, 
+      subject, 
+      message
     }
   }
 
