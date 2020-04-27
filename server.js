@@ -8,7 +8,7 @@ const morgan = require('morgan')
 const helmet = require('helmet')
 const cors = require('cors')
 
-const { PORT, USERNAME, PASSWORD } = process.env
+const { PORT, USERNAME, PASSWORD, RECIPIENT } = process.env
 
 const app = express()
 
@@ -46,10 +46,10 @@ app.post('/send', (req, res) => {
   } = req.body
 
   const emailOptions = {
-    template: 'websiteEmail',
+    template: 'website-email',
     message: {
       from: USERNAME,
-      to: emailAddress
+      to: RECIPIENT
     },
     locals: {
       name, surname, phoneNumber, emailAddress, subject, message
