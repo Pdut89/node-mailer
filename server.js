@@ -8,7 +8,7 @@ const morgan = require('morgan')
 const helmet = require('helmet')
 const cors = require('cors')
 
-const { PORT, USERNAME, PASSWORD, RECIPIENT } = process.env
+const { PORT, USERNAME, PASSWORD, HOST, RECIPIENT } = process.env
 
 const app = express()
 
@@ -21,7 +21,7 @@ app.use(morgan('tiny'))
 app.use(helmet())
 
 const transporter = nodeMailer.createTransport({
-  host: 'smtp.zoho.com',
+  host: HOST,
   port: 465,
   secure: true,
   auth: {
