@@ -120,7 +120,7 @@ app.post('/generic', async (req, res) => {
   } catch (error) {
     console.log('error: ', error)
     res.status(400).send({
-      error: err.toString()
+      error: error.toString()
     })
   }
 })
