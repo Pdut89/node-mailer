@@ -111,7 +111,7 @@ app.post('/generic', async (req, res) => {
     await transporter.sendMail({
       from: USERNAME,
       to,
-      subject: 'New Web Message Received',
+      subject: 'New Web Message Recieved',
       html: renderMessage(rest),
     })
     res.status(200).send({
