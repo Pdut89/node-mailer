@@ -45,7 +45,7 @@ const email = new Email({
 
 const renderMessage = ({ message, email, phoneNumber }) => `
   <div>
-    <p>You have recieved a message from ${email} </p>
+    <p>You have received a message from ${email} </p>
     <strong>Message:</strong>
     <p>${message}</p>
     <p> <a href = "mailto:${email}">Reply to sender</a> </p>
@@ -111,7 +111,7 @@ app.post('/generic', async (req, res) => {
     await transporter.sendMail({
       from: USERNAME,
       to,
-      subject: 'New Web Message Recieved',
+      subject: 'New Web Message Received',
       html: renderMessage(rest),
     })
     res.status(200).send({
