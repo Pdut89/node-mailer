@@ -30,7 +30,7 @@ app.use(helmet())
 const transporter = nodeMailer.createTransport({
   host: HOST,
   port: SMTP_PORT,
-  secure: SMTP_PORT === "465",
+  secure: true,
   auth: {
     user: USERNAME,
     pass: PASSWORD
@@ -49,7 +49,7 @@ const renderMessage = ({ message, email, phoneNumber }) => `
     <strong>Message:</strong>
     <p>${message}</p>
     <p> <a href = "mailto:${email}">Reply to sender</a> </p>
-    ${phoneNumber.length > 0 ? `
+    ${phoneNumber ? `
       <p>Sender phone number: <a href="tel:${phoneNumber}">${phoneNumber}</a> </p>
     ` : `
       <p>Sender did not include a phone number.</p>
@@ -96,7 +96,7 @@ app.post('/send', (req, res) => {
     .catch(error => {
       console.log('error: ', error)
       res.status(400).send({
-        error: err.toString()
+        error: error.toString()
       })
     })
 })
@@ -113,6 +113,32 @@ app.post('/generic', async (req, res) => {
       to,
       subject: 'New Web Message Received',
       html: renderMessage(rest),
+    })
+    res.status(200).send({
+      message: 'Email sent successfully.'
+    })
+  } catch (error) {
+    console.log('error: ', error)
+    res.status(400).send({
+      error: error.toString()
+    })
+  }
+})
+
+app.post('/remax', async (req, res) => {
+
+  const {
+    recipient: to,
+    subject,
+    message: text
+  } = req.body
+
+  try {
+    await transporter.sendMail({
+      from: USERNAME,
+      to,
+      subject,
+      text,
     })
     res.status(200).send({
       message: 'Email sent successfully.'
